@@ -12,6 +12,7 @@ begin
     gemspec.homepage    = "http://github.com/moonmaster9000/couch_photo"
     gemspec.authors     = ["Matt Parker"]
     gemspec.add_dependency('couchrest_model', '1.0.0.beta7')
+    gemspec.add_dependency('mini_magick', '~>3.1')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
