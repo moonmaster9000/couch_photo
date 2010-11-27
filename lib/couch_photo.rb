@@ -1,0 +1,5 @@
+require 'mini_magick'
+require 'couchrest_model'
+require 'couch_photo/variations'
+require 'couch_photo/attachment'
+require 'couch_photo/couch_photo'
