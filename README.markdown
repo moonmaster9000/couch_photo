@@ -36,8 +36,14 @@ First, define an Image document and set the versions on it:
 Next, create an instance of the image document and set the "original" image on it.
 
     i = Image.new
-    i.original "avatar.jpg", File.read("avatar.jpg")
+    i.original "avatar.jpg"
     i.save
+
+By calling the original method with a string, CouchPhoto will attempt to open a file with the same name and use that as the original image. If you don't have
+an actual file (e.g., maybe this was a form upload), then simply pass a blob as the second parameter. For example, 
+
+    blob = File.read "avatar.jpg"
+    i.original "avatar.jpg", blob
 
 Now, if you look in your image document in CouchDB, you'd see the following attachments:
 

@@ -14,7 +14,7 @@ end
 When /^I create an instance of that model with an image file$/ do
   @image = Image.new
   file = 
-  @image.original "avatar.jpg", File.read("./features/setup/fixtures/avatar.jpg")
+  @image.original "features/setup/fixtures/avatar.jpg"
   @image.save
 end
 
