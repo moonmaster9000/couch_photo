@@ -53,6 +53,9 @@ Then /^I should get the filetype of the original image attachment$/ do
 end
 
 When /^I call the `original\.mimetype` method$/ do
+end
+
+Then /^I should get the mimetype of the original image attachment$/ do
   @original.mimetype.should == "image/jpeg"
 end
 

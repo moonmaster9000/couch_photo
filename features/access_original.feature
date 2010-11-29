@@ -25,7 +25,7 @@ Scenario: Iterating through all variations
   Then I should get the filetype of the original image attachment
 
   When I call the `original.mimetype` method
-  Then I should get the filetype of the original image attachment
+  Then I should get the mimetype of the original image attachment
 
   When I call the `original.data` method
   Then I should get a binary blob of the original image attachment
