@@ -79,6 +79,19 @@ The previous variations were all simple image resizings. What if we wanted to do
 
 The `original_image` variable in the blocks is simply the MiniMagick::Image instance of your original image.
 
+### Accessing the Original Image
+
+How do you access the the original image? Let me count the ways: 
+
+    @image.original.original_filename # ==> "avatar.jpg"
+    @image.original.filename # ==> "original.jpg"
+    @image.original.path # ==> "/your_image_database/avatar.jpg/original.jpg"
+    @image.original.url # ==> "http://your_couch_server/your_image_database/avatar.jpg/original.jpg"
+    @image.original.basename # ==> "original.jpg"
+    @image.original.filetype # ==> "jpg"
+    @image.original.mimetype # ==> "image/jpg"
+    @image.original.data # ==> BINARY BLOB
+
 ### Accessing Variations
 
 So, now that you've got some variations, how do you access them? Simple!
