@@ -3,6 +3,23 @@ module CouchPhoto
     base.extend ClassMethods
   end
 
+  def update_or_create_attachment(attachment)
+    if self.has_attachment? attachment[:name]
+      self.update_attachment attachment
+    else
+      self.create_attachment attachment
+    end
+  end
+
+  def variations
+    @variations ||= Variations.new self 
+    @variations.variations.values
+  end
+
+  def variation
+    @variations
+  end
+
   def original(filepath, blob=nil)
     self["_id"] = File.basename filepath if self.class.override_id?
     blob ||= File.read filepath
@@ -14,23 +31,11 @@ module CouchPhoto
       update_or_create_attachment :name => "variations/#{variation_name}.#{image_format}", :file => Attachment.new(variation_blob, attachment_name) 
     end
   end
-  
-  def update_or_create_attachment(attachment)
-    if self.has_attachment? attachment[:name]
-      self.update_attachment attachment
-    else
-      self.create_attachment attachment
-    end
-  end
 
   module ClassMethods
     def variations(&block)
       raise "You must pass a block to the `variations' method." unless block
       variation_definitions.instance_eval(&block)
-    end
-
-    def variation_definitions
-      @variation_definitions ||= Variations.new
     end
     
     def override_id!
@@ -39,6 +44,10 @@ module CouchPhoto
 
     def override_id?
       @override_id
+    end
+
+    def variation_definitions
+      @variation_definitions ||= VariationDefinitions.new
     end
   end
 end
