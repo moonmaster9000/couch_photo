@@ -1,6 +1,7 @@
 module CouchPhoto
   def self.included(base)
     base.extend ClassMethods
+    base.property :original_filename
   end
 
   def update_or_create_attachment(attachment)
@@ -16,12 +17,23 @@ module CouchPhoto
     @variations.variations.values
   end
 
+  def original
+    raise "You do not have an original attachment" unless original_attachment_name
+    @original ||= Variation.new self, original_attachment_name
+  end
+
+  def original_attachment_name
+    @original_attachment_name ||= self["_attachments"].keys.select {|a| a.match /original\.[^\.]+/}.first
+  end
+
   def variation(variation_name=nil)
     variation_name ? @variations.send(variation_name) : @variations
   end
 
-  def original(filepath, blob=nil)
+  def original=(*args)#filepath, blob=nil
+    filepath, blob = args[0], args[1]
     self["_id"] = File.basename filepath if self.class.override_id?
+    self.original_filename = File.basename filepath
     blob ||= File.read filepath
     image_format = filepath.match(/^.*\.([^\.]*)$/)[1]
     attachment_name = "original.#{image_format}"

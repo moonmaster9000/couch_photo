@@ -56,21 +56,26 @@ module CouchPhoto
   end
 
   class Variation
-    attr_reader :name, :path, :filename, :basename, :filetype, :mimetype
+    attr_reader :name, :url, :path, :filename, :basename, :filetype, :mimetype
 
     def initialize(document, attachment_name)
-      @path = [document.database.to_s, document.id, attachment_name].join "/"
+      @path = "/" + [document.database.name, document.id, attachment_name].join("/")
+      @url = [document.database.to_s, document.id, attachment_name].join "/"
       @attachment_name = attachment_name
-      @name = attachment_name.gsub(/variations\/(.+)\.[^\.]+/) {$1}
+      @name = attachment_name.gsub(/(?:variations\/)?(.+)\.[^\.]+/) {$1}
       @filename = attachment_name
       @basename = File.basename attachment_name 
       @document = document
-      @filetype = attachment_name.gsub(/variations\/.+\.([^\.]+)/) {$1}
+      @filetype = attachment_name.gsub(/(?:variations\/)?.+\.([^\.]+)/) {$1}
       @mimetype = document["_attachments"][attachment_name]["content_type"]
     end
 
     def data
       @document.read_attachment @attachment_name
+    end
+
+    def original_filename
+      @document.original_filename
     end
   end
 end

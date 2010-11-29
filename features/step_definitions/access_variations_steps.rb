@@ -13,7 +13,7 @@ Given /^an instance of a model with several variations$/ do
   end
 
   @image = VariationImage.new
-  @image.original "features/setup/fixtures/avatar.jpg"
+  @image.original = "features/setup/fixtures/avatar.jpg"
   @image.save
 end
 
@@ -25,7 +25,8 @@ Then /^I should get an array of variations$/ do
   @variations.should be_kind_of(Array)
   @variations.each do |variation|
     ["small", "medium", "large"].include?(variation.name).should be_true
-    variation.path.should == [IMAGE_DB.to_s, @image.id, variation.filename].join("/")
+    variation.url.should == [IMAGE_DB.to_s, @image.id, variation.filename].join("/")
+    variation.path.should == "/" + [IMAGE_DB.name, @image.id, variation.filename].join("/")
     variation.data.should_not be_nil
     variation.filename.should_not be_nil
     variation.basename.should_not be_nil
