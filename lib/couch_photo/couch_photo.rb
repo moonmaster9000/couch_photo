@@ -16,8 +16,8 @@ module CouchPhoto
     @variations.variations.values
   end
 
-  def variation
-    @variations
+  def variation(variation_name=nil)
+    variation_name ? @variations.send(variation_name) : @variations
   end
 
   def original(filepath, blob=nil)

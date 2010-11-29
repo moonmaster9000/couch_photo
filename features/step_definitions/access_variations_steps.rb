@@ -38,6 +38,12 @@ When /^I call the variation\.variation_name method$/ do
   @large = @image.variation.large
 end
 
+When /^I call the variation\(variation_name\) method$/ do
+  @small = @image.variation "small"
+  @medium = @image.variation "medium"
+  @large = @image.variation "large"
+end
+
 Then /^I should get that specified variation$/ do
   @small.should_not be_nil
   @small.should be_kind_of(CouchPhoto::Variation)
@@ -52,4 +58,6 @@ Then /^I should get that specified variation$/ do
   @large.name.should == "large"
   @large.filename.should == "variations/large.jpg" 
   @large.basename.should == "large.jpg"
+  @large.filetype.should == "jpg"
+  @large.mimetype.should == "image/jpeg"
 end

@@ -9,3 +9,5 @@ Scenario: Iterating through all variations
   Then I should get an array of variations
   When I call the variation.variation_name method
   Then I should get that specified variation
+  When I call the variation(variation_name) method
+  Then I should get that specified variation
