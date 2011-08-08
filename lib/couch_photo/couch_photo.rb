@@ -43,6 +43,12 @@ module CouchPhoto
       update_or_create_attachment :name => "variations/#{variation_name}.#{image_format}", :file => Attachment.new(variation_blob, attachment_name) 
     end
   end
+  
+  def add_variation(*args)#variation_name, #filename
+    variation_name, filename = args[0], args[1]
+    image_format = filename.match(/^.*\.([^\.]*)$/)[1]
+    update_or_create_attachment :name => "variations/#{variation_name}.#{image_format}", :file => Attachment.new(filename, variation_name)
+  end
 
   module ClassMethods
     def variations(&block)
