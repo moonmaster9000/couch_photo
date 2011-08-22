@@ -35,7 +35,7 @@ module CouchPhoto
     self["_id"] = File.basename filepath if self.class.override_id?
     self.original_filename = File.basename filepath
     blob ||= File.read filepath
-    image_format = filepath.match(/^.*\.([^\.]*)$/)[1]
+    image_format = filetype(filepath)
     attachment_name = "original.#{image_format}"
     attachment = {:name => attachment_name, :file => Attachment.new(blob, attachment_name)}
     update_or_create_attachment attachment
@@ -44,10 +44,13 @@ module CouchPhoto
     end
   end
   
-  def add_variation(*args)#variation_name, #filename
-    variation_name, filename = args[0], args[1]
-    image_format = filename.match(/^.*\.([^\.]*)$/)[1]
+  def add_variation(variation_name, filename)
+    image_format = filetype(filename)
     update_or_create_attachment :name => "variations/#{variation_name}.#{image_format}", :file => Attachment.new(filename, variation_name)
+  end
+  
+  def filetype(filename)
+    filename.match(/^.*\.([^\.]*)$/)[1]
   end
 
   module ClassMethods
