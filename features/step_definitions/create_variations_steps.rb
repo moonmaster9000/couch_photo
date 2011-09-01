@@ -50,3 +50,16 @@ Then /^it should be accessible from "([^"]*)"$/ do |arg1|
   end
 end
 
+Given /^an instance of an Image model that includes CouchRest:$/ do |code|
+  eval code
+end
+
+When /^I add a custom variation to it using the "([^"]*)" qualifier and save:$/ do |arg1, code|
+  eval code
+end
+
+Then /^my image should have a custom variation with that name:$/ do |code|
+  eval code
+end
+
+

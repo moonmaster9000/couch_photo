@@ -21,10 +21,9 @@ When /^I call the variations instance method$/ do
   @variations = @image.variations
 end
 
-Then /^I should get an array of variations$/ do
-  @variations.should be_kind_of(Array)
-  @variations.each do |variation|
-    ["small", "medium", "large"].include?(variation.name).should be_true
+Then /^the `each` method should allow me to iterate over the variation names and variation value pairs$/ do
+  @variations.each do |variation_key, variation|
+    ["small", "medium", "large"].include?(variation_key).should be_true
     variation.url.should == [IMAGE_DB.to_s, @image.id, variation.filename].join("/")
     variation.path.should == "/" + [IMAGE_DB.name, @image.id, variation.filename].join("/")
     variation.data.should_not be_nil
@@ -61,4 +60,23 @@ Then /^I should get that specified variation$/ do
   @large.basename.should == "large.jpg"
   @large.filetype.should == "jpg"
   @large.mimetype.should == "image/jpeg"
+end
+
+When /^I create a custom variation named "([^"]*)"$/ do |variation_name|
+  @image.add_variation variation_name, :file => "features/setup/fixtures/avatar.jpg"
+  @image.save
+end
+
+When /^I call variation\("([^"]*)"\)$/ do |variation_name|
+  @custom_variation = @image.variation variation_name
+end
+
+Then /^I should get back "([^"]*)"$/ do |variation_name|
+  @custom_variation.filename.should == "variations/#{variation_name}" 
+  @custom_variation.basename.should == "#{variation_name}"
+  @custom_variation.data.should == File.read("features/setup/fixtures/avatar.jpg")
+end
+
+When /^I load the model from the database$/ do
+  @image = VariationImage.get @image.id
 end

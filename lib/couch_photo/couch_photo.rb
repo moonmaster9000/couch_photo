@@ -13,8 +13,8 @@ module CouchPhoto
   end
 
   def variations
-    @variations ||= Variations.new self 
-    @variations.variations.values
+    @variations = Variations.new self 
+    # @variations.variations.values
   end
 
   def original
@@ -27,7 +27,7 @@ module CouchPhoto
   end
 
   def variation(variation_name=nil)
-    variation_name ? @variations.send(variation_name) : @variations
+    variation_name ? variations.send(variation_name) : variations
   end
 
   def original=(*args)#filepath, blob=nil
@@ -44,9 +44,15 @@ module CouchPhoto
     end
   end
   
-  def add_variation(variation_name, filename)
-    image_format = filetype(filename)
-    update_or_create_attachment :name => "variations/#{variation_name}.#{image_format}", :file => Attachment.new(filename, variation_name)
+  def add_variation(variation_name, opt={})
+    if opt[:file]
+      blob = File.read("#{opt[:file]}")
+    elsif opt[:blob]
+      blob = opt[:blob]
+    end
+    
+    update_or_create_attachment :name => "variations/#{variation_name}", :file => Attachment.new(blob, variation_name)
+    variations.add_variation variation_name
   end
   
   def filetype(filename)
@@ -70,5 +76,14 @@ module CouchPhoto
     def variation_definitions
       @variation_definitions ||= VariationDefinitions.new
     end
+  end
+  
+  module_function
+  def variation_short_name(variation_path)
+    variation_path.gsub(/(?:variations\/)?(.+)\.[^\.]+/) {$1}
+  end
+  
+  def variation_file_extension(variation_path)
+    variation_path.gsub(/(?:variations\/)?.+\.([^\.]+)/) {$1}
   end
 end

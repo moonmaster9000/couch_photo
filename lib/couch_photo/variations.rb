@@ -1,5 +1,9 @@
 module CouchPhoto
+
+  
   class VariationDefinitions
+    attr_reader :variations
+    
     def initialize
       @variations = {}
     end
@@ -38,20 +42,33 @@ module CouchPhoto
   end
 
   class Variations
-    attr_reader :variations
+    attr_reader :variations, :document
 
     def initialize(document)
+      @document = document
       @variations = {}
       attachments = document["_attachments"] || {}
       attachments.keys.select {|name| name.match /variations\//}.each do |variation_name|
-        variation_short_name = variation_name.gsub(/variations\/(.+)\.[^\.]+/) {$1}
-        @variations[variation_short_name] = Variation.new document, variation_name
+        if document.class.variation_definitions.variations.keys.include?(CouchPhoto.variation_short_name(variation_name).to_sym)
+          variation_key = CouchPhoto.variation_short_name(variation_name)
+        else
+          variation_key = File.basename(variation_name)
+        end
+        @variations[variation_key] = Variation.new document, variation_name
       end
+    end
+    
+    def each(&block)
+      @variations.each &block
     end
 
     def method_missing(method_name, *args, &block)
       raise "Unknown variation '#{method_name}'" unless @variations[method_name.to_s]
       @variations[method_name.to_s]
+    end
+    
+    def add_variation(variation_name)
+      @variations[File.basename(variation_name)] = Variation.new document, "variations/#{variation_name}"
     end
   end
 
@@ -62,11 +79,11 @@ module CouchPhoto
       @path = "/" + [document.database.name, document.id, attachment_name].join("/")
       @url = [document.database.to_s, document.id, attachment_name].join "/"
       @attachment_name = attachment_name
-      @name = attachment_name.gsub(/(?:variations\/)?(.+)\.[^\.]+/) {$1}
+      @name = CouchPhoto.variation_short_name attachment_name
       @filename = attachment_name
       @basename = File.basename attachment_name 
       @document = document
-      @filetype = attachment_name.gsub(/(?:variations\/)?.+\.([^\.]+)/) {$1}
+      @filetype = CouchPhoto.variation_file_extension attachment_name
       @mimetype = document["_attachments"][attachment_name]["content_type"]
     end
 
