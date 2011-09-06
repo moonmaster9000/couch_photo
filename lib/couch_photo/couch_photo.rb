@@ -14,7 +14,6 @@ module CouchPhoto
 
   def variations
     @variations = Variations.new self 
-    # @variations.variations.values
   end
 
   def original
@@ -32,6 +31,13 @@ module CouchPhoto
 
   def original=(*args)#filepath, blob=nil
     filepath, blob = args[0], args[1]
+        
+    if self.class.xmp_metadata?
+      `convert #{filepath} features/setup/fixtures/temp.xmp`
+      self.metadata = Hash.from_xml File.read("features/setup/fixtures/temp.xmp")
+      File.delete("features/setup/fixtures/temp.xmp")
+    end
+
     self["_id"] = File.basename filepath if self.class.override_id?
     self.original_filename = File.basename filepath
     blob ||= File.read filepath
@@ -67,6 +73,15 @@ module CouchPhoto
     
     def override_id!
       @override_id = true
+    end
+    
+    def xmp_metadata!
+      @xmp_metadata = true
+      self.property :metadata, Hash
+    end
+    
+    def xmp_metadata?
+      @xmp_metadata
     end
 
     def override_id?
