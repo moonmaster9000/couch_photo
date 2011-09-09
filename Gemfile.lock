@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    couch_photo (0.0.5)
+    couch_photo (0.0.6)
       couchrest_model (~> 1.0.0)
       mini_magick (~> 3.1)
 

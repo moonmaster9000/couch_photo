@@ -31,17 +31,19 @@ module CouchPhoto
 
   def original=(*args)#filepath, blob=nil
     filepath, blob = args[0], args[1]
-        
+    image_format = filetype(filepath)
+    filename = File.basename filepath
+    basename = File.basename(filepath, "." + "#{image_format}")
+
     if self.class.xmp_metadata?
-      `convert #{filepath} features/setup/fixtures/temp.xmp`
-      self.metadata = Hash.from_xml File.read("features/setup/fixtures/temp.xmp")
-      File.delete("features/setup/fixtures/temp.xmp")
+      `convert #{filepath} /tmp/#{basename}.xmp`
+      self.metadata = Hash.from_xml File.read("/tmp/#{basename}.xmp")
+      File.delete("/tmp/#{basename}.xmp")
     end
 
-    self["_id"] = File.basename filepath if self.class.override_id?
-    self.original_filename = File.basename filepath
+    self["_id"] = filename if self.class.override_id?
+    self.original_filename = filename
     blob ||= File.read filepath
-    image_format = filetype(filepath)
     attachment_name = "original.#{image_format}"
     attachment = {:name => attachment_name, :file => Attachment.new(blob, attachment_name)}
     update_or_create_attachment attachment

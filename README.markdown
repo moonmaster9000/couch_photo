@@ -160,22 +160,22 @@ These images would be accessible via the following urls :
 ## XMP Metadata
 Need to access XMP Metadata?  It's as simple as adding xmp_metadata! into your document definition.
 
-  class Image < CouchRest::Model::Base
-    use_database IMAGE_DB
-    include CouchPhoto
+    class Image < CouchRest::Model::Base
+      use_database IMAGE_DB
+      include CouchPhoto
 
-    xmp_metadata!
-    override_id! # the id of the document will be the basename of the original image file
+      xmp_metadata!
+      override_id! # the id of the document will be the basename of the original image file
 
-    variations do
-      small "20x20"
-      medium "100x100"
-      large "500x500"
+      variations do
+        small "20x20"
+        medium "100x100"
+        large "500x500"
+      end
     end
-  end
   
-  i = Image.new
-  i.original = "avatar.jpg"
-  i.save
+    i = Image.new
+    i.original = "avatar.jpg"
+    i.save
   
 Now you can access your image's XMP metadata by calling i.metadata.
