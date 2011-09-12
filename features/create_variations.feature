@@ -11,13 +11,13 @@ Feature: Image Variations
   Scenario: Creating a custom variation
     Given an instance of an Image model that includes CouchRest:
       """
-        class CustomVariationImage < CouchRest::Model::Base
+        class Image < CouchRest::Model::Base
           use_database IMAGE_DB
           include CouchPhoto
           override_id! 
         end
 
-        @image = CustomVariationImage.new
+        @image = Image.new
         @image.original = "features/setup/fixtures/avatar.jpg"
         @image.save
       """
