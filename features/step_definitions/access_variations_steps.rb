@@ -77,6 +77,15 @@ Then /^I should get back "([^"]*)"$/ do |variation_name|
   @custom_variation.data.should == File.read("features/setup/fixtures/avatar.jpg")
 end
 
+When /^I call the count method$/ do
+  @count = @image.variations.count
+end
+
+Then /^I should receive the correct number of variations$/ do
+  @count.should == 5
+end
+
+
 When /^I load the model from the database$/ do
   @image = VariationImage.get @image.id
 end

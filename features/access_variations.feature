@@ -17,4 +17,6 @@ Scenario: Iterating through all variations
   When I load the model from the database
   And I call variation("my_custom_variation.jpg")
   Then I should get back "my_custom_variation.jpg"
+  When I call the count method
+  Then I should receive the correct number of variations
   
