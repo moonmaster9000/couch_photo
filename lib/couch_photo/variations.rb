@@ -64,7 +64,7 @@ module CouchPhoto
     
     def count
       attachments = self.document["_attachments"] || {}
-      attachments.keys.count
+      attachments.keys.count {|name| name.match /variations\//}
     end
 
     def method_missing(method_name, *args, &block)

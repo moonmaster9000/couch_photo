@@ -82,7 +82,7 @@ When /^I call the count method$/ do
 end
 
 Then /^I should receive the correct number of variations$/ do
-  @count.should == 5
+  @count.should == 4
 end
 
 
