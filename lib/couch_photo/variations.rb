@@ -52,7 +52,7 @@ module CouchPhoto
         if document.class.variation_definitions.variations.keys.include?(CouchPhoto.variation_short_name(variation_name).to_sym)
           variation_key = CouchPhoto.variation_short_name(variation_name)
         else
-          variation_key = File.basename(variation_name)
+          variation_key = CouchPhoto.variation_short_name_from_path(variation_name)
         end
         @variations[variation_key] = Variation.new document, variation_name
       end
@@ -61,6 +61,9 @@ module CouchPhoto
     def each(&block)
       @variations.each &block
     end
+    
+    def count
+    end
 
     def method_missing(method_name, *args, &block)
       raise "Unknown variation '#{method_name}'" unless @variations[method_name.to_s]
@@ -68,7 +71,7 @@ module CouchPhoto
     end
     
     def add_variation(variation_name)
-      @variations[File.basename(variation_name)] = Variation.new document, "variations/#{variation_name}"
+      @variations[variation_name] = Variation.new document, "variations/#{variation_name}"
     end
   end
 

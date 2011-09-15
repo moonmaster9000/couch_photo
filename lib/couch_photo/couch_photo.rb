@@ -64,7 +64,6 @@ module CouchPhoto
     elsif opt[:blob]
       blob = opt[:blob]
     end
-    
     update_or_create_attachment :name => "variations/#{variation_name}", :file => Attachment.new(blob, variation_name)
     variations.add_variation variation_name
   end
@@ -104,6 +103,10 @@ module CouchPhoto
   module_function
   def variation_short_name(variation_path)
     variation_path.gsub(/(?:variations\/)?(.+)\.[^\.]+/) {$1}
+  end
+  
+  def variation_short_name_from_path(variation_path)
+    variation_path.gsub(/(?:variations\/)?(.+)/) {$1}
   end
   
   def variation_file_extension(variation_path)

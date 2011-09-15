@@ -24,13 +24,13 @@ Feature: Image Variations
 
     When I add a custom variation to it using the ":file =>" qualifier and save:
       """
-        @image.add_variation "my_custom_variation.jpg", :file => "features/setup/fixtures/avatar.jpg"
+        @image.add_variation "promo/my_custom_variation.jpg", :file => "features/setup/fixtures/avatar.jpg"
         @image.save
       """
 
     Then my image should have a custom variation with that name:
       """
-        @image.variation("my_custom_variation.jpg").data.should == File.read("features/setup/fixtures/avatar.jpg")
+        @image.variation("promo/my_custom_variation.jpg").data.should == File.read("features/setup/fixtures/avatar.jpg")
       """
 
     When I add a custom variation to it using the ":blob =>" qualifier and save:
