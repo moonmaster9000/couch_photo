@@ -1,4 +1,3 @@
-require 'spec/expectations'
 $LOAD_PATH.unshift './lib'
 require 'couch_photo'
 
@@ -8,4 +7,12 @@ IMAGE_DB = COUCHDB_SERVER.database!('couch_photo_test')
 Before do |scenario|
   IMAGE_DB.delete!
   IMAGE_DB.create!
+end
+
+Before do
+  if defined? Image
+    Object.class_eval do
+      remove_const "Image"
+    end
+  end
 end

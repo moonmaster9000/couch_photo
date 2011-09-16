@@ -13,8 +13,7 @@ module CouchPhoto
   end
 
   def variations
-    @variations ||= Variations.new self 
-    @variations.variations.values
+    @variations = Variations.new self 
   end
 
   def original
@@ -27,21 +26,50 @@ module CouchPhoto
   end
 
   def variation(variation_name=nil)
-    variation_name ? @variations.send(variation_name) : @variations
+    variation_name ? variations.send(variation_name) : variations
   end
 
   def original=(*args)#filepath, blob=nil
-    filepath, blob = args[0], args[1]
-    self["_id"] = File.basename filepath if self.class.override_id?
-    self.original_filename = File.basename filepath
+    if args[0].kind_of?(Array)
+      filepath, blob = args[0].first, args[0].last
+    else
+      filepath = args[0]
+      blob = nil
+    end
+    image_format = filetype(filepath)
+    filename = File.basename filepath
+    basename = File.basename(filepath, "." + "#{image_format}")
+
+    if self.class.xmp_metadata?
+      File.open(filepath, 'w') { |f| f.write blob } if !blob.nil?
+      `convert #{filepath} /tmp/#{basename}.xmp`
+      self.metadata = Hash.from_xml File.read("/tmp/#{basename}.xmp")
+      File.delete("/tmp/#{basename}.xmp")
+    end
+
+    self["_id"] = filename if self.class.override_id?
+    self.original_filename = filename
     blob ||= File.read filepath
-    image_format = filepath.match(/^.*\.([^\.]*)$/)[1]
     attachment_name = "original.#{image_format}"
     attachment = {:name => attachment_name, :file => Attachment.new(blob, attachment_name)}
     update_or_create_attachment attachment
     self.class.variation_definitions.run_variations(blob).each do |variation_name, variation_blob|
       update_or_create_attachment :name => "variations/#{variation_name}.#{image_format}", :file => Attachment.new(variation_blob, attachment_name) 
     end
+  end
+  
+  def add_variation(variation_name, opt={})
+    if opt[:file]
+      blob = File.read("#{opt[:file]}")
+    elsif opt[:blob]
+      blob = opt[:blob]
+    end
+    update_or_create_attachment :name => "variations/#{variation_name}", :file => Attachment.new(blob, variation_name)
+    variations.add_variation variation_name
+  end
+  
+  def filetype(filename)
+    filename.match(/^.*\.([^\.]*)$/)[1]
   end
 
   module ClassMethods
@@ -53,6 +81,15 @@ module CouchPhoto
     def override_id!
       @override_id = true
     end
+    
+    def xmp_metadata!
+      @xmp_metadata = true
+      self.property :metadata, Hash
+    end
+    
+    def xmp_metadata?
+      @xmp_metadata
+    end
 
     def override_id?
       @override_id
@@ -61,5 +98,18 @@ module CouchPhoto
     def variation_definitions
       @variation_definitions ||= VariationDefinitions.new
     end
+  end
+  
+  module_function
+  def variation_short_name(variation_path)
+    variation_path.gsub(/(?:variations\/)?(.+)\.[^\.]+/) {$1}
+  end
+  
+  def variation_short_name_from_path(variation_path)
+    variation_path.gsub(/(?:variations\/)?(.+)/) {$1}
+  end
+  
+  def variation_file_extension(variation_path)
+    variation_path.gsub(/(?:variations\/)?.+\.([^\.]+)/) {$1}
   end
 end

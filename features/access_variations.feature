@@ -6,8 +6,17 @@ Feature: Accessing Image Variations
 Scenario: Iterating through all variations
   Given an instance of a model with several variations
   When I call the variations instance method
-  Then I should get an array of variations
+  Then the `each` method should allow me to iterate over the variation names and variation value pairs
   When I call the variation.variation_name method
   Then I should get that specified variation
   When I call the variation(variation_name) method
   Then I should get that specified variation
+  When I create a custom variation named "my_custom_variation.jpg"
+  And I call variation("my_custom_variation.jpg")
+  Then I should get back "my_custom_variation.jpg"
+  When I load the model from the database
+  And I call variation("my_custom_variation.jpg")
+  Then I should get back "my_custom_variation.jpg"
+  When I call the count method
+  Then I should receive the correct number of variations
+  
