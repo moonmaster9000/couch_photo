@@ -1,0 +1,4 @@
+v0.0.6
+  -- new functionality contributed by Chad Harmon! See README for full details.
+    * opt-in exctraction of XMP metadata from images
+    * support for adding custom variations on your image documents
