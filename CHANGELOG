@@ -1,3 +1,6 @@
+v0.0.7
+  -- fixed a bug introduced in 0.0.6 where original images with blobs were being written to the current working directory upon XMP metadata extraction.
+
 v0.0.6
   -- new functionality contributed by Chad Harmon! See README for full details.
     * opt-in exctraction of XMP metadata from images

@@ -41,8 +41,12 @@ module CouchPhoto
     basename = File.basename(filepath, "." + "#{image_format}")
 
     if self.class.xmp_metadata?
-      File.open(filepath, 'w') { |f| f.write blob } if !blob.nil?
-      `convert #{filepath} /tmp/#{basename}.xmp`
+      if blob
+        File.open("/tmp/#{filename}", 'w') { |f| f.write blob } if !blob.nil?
+        `convert /tmp/#{filename} /tmp/#{basename}.xmp`
+      else
+        `convert #{filepath} /tmp/#{basename}.xmp`
+      end
       self.metadata = Hash.from_xml File.read("/tmp/#{basename}.xmp")
       File.delete("/tmp/#{basename}.xmp")
     end
