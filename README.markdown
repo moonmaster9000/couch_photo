@@ -37,7 +37,7 @@ Here, we've created a new image instance, then added an "original" image to it v
 @image.original.original_filename # ==> "my_file.jpg"
 @image.original.path              # ==> "/your_image_database/8383830jlkfdjskalfjdirewio/variations/original.jpg"
 @image.original.url               # ==> "http://your_couch_server/your_image_database/8383830jlkfdjskalfjdirewio/variations/original.jpg"
-@image.original.filetype          # ==> "jpg"
+@image.original.extension         # ==> "jpg"
 @image.original.mimetype          # ==> "image/jpg"
 @image.original.data              # ==> BINARY BLOB
 @image.original.width             # ==> 720
