@@ -67,6 +67,7 @@ Feature: Adding an original image to your image document
 
     Then I should be able to access metadata about the image via the `original` method:
       """
+        @image.original.original_filename.should == "avatar.jpg"
         @image.original.path.should      == "/couch_photo_test/#{@image.id}/variations/original.jpg"
         @image.original.url.should       == "http://admin:password@localhost:5984/couch_photo_test/#{@image.id}/variations/original.jpg"
         @image.original.extension.should == "jpg"

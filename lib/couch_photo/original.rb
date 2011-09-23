@@ -8,6 +8,7 @@ module CouchPhoto
       extension = File.extname filename
       @attachment_name = "variations/original#{extension}"
       @document.create_attachment :name => @attachment_name, :file => FakeFile.new(data)
+      @document.original_filename = File.basename(filename)
     end
 
     def path
@@ -19,6 +20,12 @@ module CouchPhoto
     def extension
       if exists?
         @extension ||= File.extname(attachment_name).gsub(/\./, '')
+      end
+    end
+
+    def original_filename
+      if exists?
+        @document.original_filename
       end
     end
 
