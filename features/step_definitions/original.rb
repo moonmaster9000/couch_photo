@@ -17,3 +17,11 @@ end
 When /^I call the `load_original` method with filename 'avatar\.jpg' a binary blob:$/ do |string|
   eval string
 end
+
+Given /^an image with an original:$/ do |string|
+  eval string
+end
+
+Then /^I should be able to access metadata about the image via the `original` method:$/ do |string|
+  eval string
+end

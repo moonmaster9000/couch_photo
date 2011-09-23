@@ -25,6 +25,7 @@ Feature: Adding an original image to your image document
         @image["_attachments"]["variations/original.jpg"].should_not be_empty
       """
   
+
   Scenario: `load_original` accepts a filename and a data blob
     Given an instance of an image class that includes `CouchPhoto`:
       """
@@ -49,3 +50,23 @@ Feature: Adding an original image to your image document
       """
         @image["_attachments"]["variations/original.jpg"].should_not be_empty
       """
+
+  
+  Scenario: the original is accessible via the `original` method:
+    Given an image with an original:
+      """
+        class Image < CouchRest::Model::Base
+          include CouchPhoto
+        end
+
+        @image = Image.new
+        @image.load_original_from_file "features/fixtures/avatar.jpg"
+        @image.save
+      """
+
+    Then I should be able to access metadata about the image via the `original` method:
+      """
+        @image.original.path.should == "#{@image.database.name}/#{@image.id}/variations/original.jpg"
+      """
+
+

@@ -34,14 +34,14 @@ end
 Here, we've created a new image instance, then added an "original" image to it via the `load_original_from_file` method by specifiying a file on the disk. Upon `save`, this file is read from disk and stored in CouchDB. We could now access our original image thusly:
 
 ```ruby
-@image.original[:original_filename] # ==> "my_file.jpg"
-@image.original[:path]              # ==> "/your_image_database/8383830jlkfdjskalfjdirewio/variations/original.jpg"
-@image.original[:url]               # ==> "http://your_couch_server/your_image_database/8383830jlkfdjskalfjdirewio/variations/original.jpg"
-@image.original[:filetype]          # ==> "jpg"
-@image.original[:mimetype]          # ==> "image/jpg"
-@image.original[:data]              # ==> BINARY BLOB
-@image.original[:width]             # ==> 720
-@image.original[:height]            # ==> 480
+@image.original.original_filename # ==> "my_file.jpg"
+@image.original.path              # ==> "/your_image_database/8383830jlkfdjskalfjdirewio/variations/original.jpg"
+@image.original.url               # ==> "http://your_couch_server/your_image_database/8383830jlkfdjskalfjdirewio/variations/original.jpg"
+@image.original.filetype          # ==> "jpg"
+@image.original.mimetype          # ==> "image/jpg"
+@image.original.data              # ==> BINARY BLOB
+@image.original.width             # ==> 720
+@image.original.height            # ==> 480
 ```
 
 Suppose the original image isn't on file, but simply in memory (perhaps this was a form upload). You can use the `load_original` method to pass a raw binary blob via the `:data` parameter:
@@ -70,7 +70,7 @@ Now, if you create a new image document with an original, you'll have a much mor
 @image = Image.new
 @image.load_original_from_file "/path/to/my_file.jpg"
 @image.save
-@image.original[:url] #==> http://your_couch_server/your_image_database/my_file.jpg/variations/original.jpg
+@image.original.url #==> http://your_couch_server/your_image_database/my_file.jpg/variations/original.jpg
 ```
 
 ###Simple Variations
