@@ -1,15 +1,8 @@
 module CouchPhoto
-  class Original
-    def initialize(document)
-      @document = document
-    end
-
-    def create_attachment(filename, data)
-      extension = File.extname filename
-      @data = data
-      @attachment_name = "variations/original#{extension}"
-      @document.create_attachment :name => @attachment_name, :file => FakeFile.new(@data)
-      @document.original_filename = File.basename(filename)
+  class Variation
+    def initialize(document, variation_name)
+      @document       = document
+      @variation_name = variation_name
     end
 
     def path
@@ -21,12 +14,6 @@ module CouchPhoto
     def extension
       if exists?
         @extension ||= File.extname(attachment_name).gsub(/\./, '')
-      end
-    end
-
-    def original_filename
-      if exists?
-        @document.original_filename
       end
     end
 
@@ -68,10 +55,7 @@ module CouchPhoto
     end
 
     def attachment_name
-      @attachment_name ||= 
-        @document["_attachments"].keys.select do |attachment_name| 
-          attachment_name.match /variations\/original\.[^.]*/
-        end.first
+      "variations/#{@variation_name}.#{@document.original.extension}"
     end
   end
 end
