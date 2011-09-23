@@ -1,5 +1,5 @@
 module CouchPhoto
-  class Attachment #:nodoc:
+  class FakeFile #:nodoc:
     attr_reader :read, :path
     def initialize(data, path=nil)
       @read = data
