@@ -13,3 +13,15 @@ end
 Given /^an image class with a complex grayscale variation definition on it:$/ do |string|
   eval string
 end
+
+When /^I add a custom variation to it via the '.*' method:$/ do |string|
+  eval string
+end
+
+Then /^I should have a custom variation named '.*':$/ do |string|
+  eval string
+end
+
+When /^I load the image from the database:$/ do |string|
+  eval string
+end

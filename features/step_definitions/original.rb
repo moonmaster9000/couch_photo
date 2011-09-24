@@ -25,3 +25,11 @@ end
 Then /^I should be able to access metadata about the image via the `original` method:$/ do |string|
   eval string
 end
+
+Then /^the original image should be part of the document:$/ do |string|
+  eval string
+end
+
+Then /^the original image should be a part of the document:$/ do |string|
+  eval string
+end
