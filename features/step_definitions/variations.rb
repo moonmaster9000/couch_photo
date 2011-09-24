@@ -9,3 +9,7 @@ end
 Then /^the image document should have a thumbnail variation:$/ do |string|
   eval string
 end
+
+Given /^an image class with a complex grayscale variation definition on it:$/ do |string|
+  eval string
+end

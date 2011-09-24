@@ -18,9 +18,16 @@ module CouchPhoto
     end
 
     private
+
     def manipulate(image_blob)
       mini_magick_image = MiniMagick::Image.read(image_blob)
-      mini_magick_image.resize @resize_definition if @resize_definition
+      
+      if @resize_definition
+        mini_magick_image.resize @resize_definition 
+      elsif @custom_definition
+        @custom_definition.call mini_magick_image
+      end
+
       mini_magick_image.to_blob
     end
   end
