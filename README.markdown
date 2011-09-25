@@ -224,7 +224,7 @@ These images would be accessible via the following urls:
 
 ## XMP Metadata
 
-Need to access the XMP Metadata on your original?  It's as simple as adding xmp_metadata! into your document definition.
+Need to access the XMP Metadata on your original?  It's as simple as adding `extract_xmp_metadata!` into your document definition.
 
 ```ruby
 class Image < CouchRest::Model::Base
