@@ -231,7 +231,7 @@ class Image < CouchRest::Model::Base
   use_database IMAGE_DB
   include CouchPhoto
 
-  xmp_metadata!
+  extract_xmp_metadata!
   override_id! # the id of the document will be the basename of the original image file
 
   variations do
@@ -246,12 +246,14 @@ i.load_original_from_file "avatar.jpg"
 i.save
 ```
 
-Now you can access your image's XMP metadata by calling `i.metadata`.
+Now you can access your image's XMP metadata as a hash by calling `i.xmp_metadata`.
 
 
 ## Adding extra properties to your variations
 
-Perhaps you'd like to add some extra properties that you can save for each of your image variations, like "alt" text, or captions. You can do so by using the `properties` method inside of your `variations` block definition:
+Perhaps you'd like to add some extra properties that you can save for each of your image variations, like "alt" text, or captions. Simply use the `metadata` hash on your variations.
+
+For example, given the following definition:
 
 ```ruby
 class Image < CouchRest::Model::Base
@@ -259,30 +261,19 @@ class Image < CouchRest::Model::Base
   include CouchPhoto
 
   variations do
-    properties do
-      property :alt
-      property :caption
+    thumbnail "20x20"
+    grayscale do |original_image|
+      original_image.monochrome
     end
-
-    small "20x20"
-    medium "100x100"
-    large "500x500"
   end
 end
 ```
 
-And now you can set these properties through the same variation accessors you're already used to:
+You could now set any metadata properties you desire on your variations:
 
 ```ruby
 @image = Image.first
-@image.variations[:small].alt = "alt text"
-@image.variations[:small].caption = "Thumbnail of a larger photo found here: #{@image.original.url}"
-@image.save
-```
-
-You can also change a variation's image:
-    
-```ruby
-@image.variations[:small].data = File.read("/path/to/some/image.jpg")
+@image.variations[:small].metadata["alt"] = "alt text"
+@image.variations[:grayscale].metadata["caption"] = "Grayscale version of: #{@image.original.url}"
 @image.save
 ```

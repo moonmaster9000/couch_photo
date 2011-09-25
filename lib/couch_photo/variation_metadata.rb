@@ -32,6 +32,15 @@ module CouchPhoto
       mini_magick[:height]
     end
 
+    def xmp_metadata
+      tmp_image_uuid = `uuidgen`.strip
+      tmp_image_file_name = "/tmp/#{tmp_image_uuid}.#{extension}" 
+      tmp_xmp_file_name = "/tmp/#{tmp_image_uuid}.xmp" 
+      mini_magick.write tmp_image_file_name 
+      `convert #{tmp_image_file_name} #{tmp_xmp_file_name} 2> /dev/null` 
+      Hash.from_xml File.read(tmp_xmp_file_name)
+    end
+
     def url
       if exists?
         "#{@document.database.root}/#{@document.id}/#{attachment_name}"

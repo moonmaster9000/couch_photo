@@ -12,6 +12,7 @@ module CouchPhoto
       @attachment_name = "variations/original#{extension}"
       @document.create_attachment :name => @attachment_name, :file => FakeFile.new(@data)
       @document.original_filename = File.basename(filename)
+      @document.xmp_metadata = xmp_metadata if @document.class.extract_xmp_metadata?
     end
 
     def original_filename

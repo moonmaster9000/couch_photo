@@ -10,10 +10,19 @@ module CouchPhoto
       self.before_create :set_id_to_original_filename
     end
 
+    def extract_xmp_metadata!
+      @extract_xmp_metadata = true
+      self.property :xmp_metadata, Hash, :default => nil
+    end
+
     def variations(&block)
       @variation_config ||= CouchPhoto::VariationConfig.new
       @variation_config.instance_eval &block if block
       @variation_config
+    end
+
+    def extract_xmp_metadata?
+      @extract_xmp_metadata
     end
   end
 
