@@ -5,7 +5,7 @@ A mixin for auto-generating image variations on Image documents with CouchDB.
 ##Installation
 
 ```sh
-    $ gem install couch_photo
+    $ gem install couch_photo --pre
 ```
 ## Documentation
 
