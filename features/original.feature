@@ -1,4 +1,4 @@
-Feature: Getting started: setting up the original image on your document
+Feature: The "Original" Image
 
   Each image document is centered around the concept of the "original" image. This is the original, unpolluted image that forms the core of the document. 
 

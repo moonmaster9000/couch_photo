@@ -1,4 +1,4 @@
-Feature: Variations
+Feature: Auto-generated and Custom Variations
 
   Let's imagine we want to auto-generate small, medium, and large variations of our image everytime it gets updated.
 

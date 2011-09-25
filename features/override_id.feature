@@ -1,4 +1,4 @@
-Feature: Using image filenames as CouchDB document ids (instead of UUIDs)
+Feature: Overriding document IDs
 
   Instead of letting CouchDB generate a UUID for your image documents, you'll likely prefer that the basename of the "original" become the ID of your document. 
 

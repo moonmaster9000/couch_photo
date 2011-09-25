@@ -1,0 +1,7 @@
+- Introduction.markdown
+- getting_started:
+  - Installation.markdown
+  - original.feature
+  - override_id.feature
+- variations.feature
+- xmp_metadata.feature
