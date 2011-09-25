@@ -1,15 +1,25 @@
-#Introduction
+#CouchPhoto
 
-A mixin for auto-generating image variations on Image documents with CouchDB.
+`CouchPhoto` is a mixin for auto-generating image variations on Image documents with CouchDB.
 
 ##Installation
 
+`CouchPhoto` is available as a gem. You can install it directly via:
+
 ```sh
-    $ gem install couch_photo --pre
+$ gem install couch_photo --pre
 ```
+
+Or, you can add the following to your projects `Gemfile` if you're using `bundler`:
+
+```ruby
+gem "couch_photo", '~> 1.0.0.beta.1'
+```
+
+
 ## Documentation
 
-Browse the documentation on rdoc.info: http://rdoc.info/gems/couch_photo/frames
+Browse the documentation on relishapp.com: http://relishapp.com/moonmaster9000/couch-photo
 
 ##How does it work?
 
@@ -222,33 +232,6 @@ These images would be accessible via the following urls:
     http://your_couch_server/your_image_database/somefile.jpg/variations/large_watermark.jpg
     
 
-## XMP Metadata
-
-Need to access the XMP Metadata on your original?  It's as simple as adding `extract_xmp_metadata!` into your document definition.
-
-```ruby
-class Image < CouchRest::Model::Base
-  use_database IMAGE_DB
-  include CouchPhoto
-
-  extract_xmp_metadata!
-  override_id! # the id of the document will be the basename of the original image file
-
-  variations do
-    small "20x20"
-    medium "100x100"
-    large "500x500"
-  end
-end
-
-i = Image.new
-i.load_original_from_file "avatar.jpg"
-i.save
-```
-
-Now you can access your image's XMP metadata as a hash by calling `i.xmp_metadata`.
-
-
 ## Adding extra properties to your variations
 
 Perhaps you'd like to add some extra properties that you can save for each of your image variations, like "alt" text, or captions. Simply use the `metadata` hash on your variations.
@@ -277,3 +260,33 @@ You could now set any metadata properties you desire on your variations:
 @image.variations[:grayscale].metadata["caption"] = "Grayscale version of: #{@image.original.url}"
 @image.save
 ```
+
+
+## XMP Metadata
+
+Need to access the XMP Metadata on your original?  It's as simple as adding `extract_xmp_metadata!` into your document definition.
+
+```ruby
+class Image < CouchRest::Model::Base
+  use_database IMAGE_DB
+  include CouchPhoto
+
+  extract_xmp_metadata!
+  override_id! # the id of the document will be the basename of the original image file
+
+  variations do
+    small "20x20"
+    medium "100x100"
+    large "500x500"
+  end
+end
+
+i = Image.new
+i.load_original_from_file "avatar.jpg"
+i.save
+```
+
+Now you can access your image's XMP metadata as a hash by calling `i.xmp_metadata`.
+
+
+

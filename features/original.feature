@@ -1,4 +1,33 @@
-Feature: Adding an original image to your image document
+Feature: Getting started: setting up the original image on your document
+
+  Each image document is centered around the concept of the "original" image. This is the original, unpolluted image that forms the core of the document. 
+
+  You can use the `load_original_from_file` method on an instance of your `Image` class to create an image document with an original image from your filesystem:
+
+      class Image < CouchRest::Model::Base
+        include CouchPhoto
+      end
+
+      image = Image.new
+      image.load_original_from_file "/path/to/my_file.jpg"
+      image.save
+
+  Here, we've created a new image instance, then added an "original" image to it via the `load_original_from_file` method by specifiying a file on the disk. Upon `save`, this file is read from disk and stored in CouchDB. We could now access our original image thusly:
+
+      image.original.original_filename # ==> "my_file.jpg"
+      image.original.path              # ==> "/your_image_database/8383830jlkfdjskalfjdirewio/variations/original.jpg"
+      image.original.url               # ==> "http://your_couch_server/your_image_database/8383830jlkfdjskalfjdirewio/variations/original.jpg"
+      image.original.extension         # ==> "jpg"
+      image.original.mimetype          # ==> "image/jpg"
+      image.original.data              # ==> BINARY BLOB
+      image.original.width             # ==> 720
+      image.original.height            # ==> 480
+
+  Suppose the original image isn't on file, but simply in memory (perhaps this was a form upload). You can use the `load_original` method to pass a raw binary blob via the `:data` parameter:
+
+      image.load_original :filename => "my_file.jpg", :data => File.read("/path/to/my_file.jpg")
+
+
 
   Scenario: `load_original_from_file` accepts a filepath
     Given an instance of an image class that includes `CouchPhoto`:
