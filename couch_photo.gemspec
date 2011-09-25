@@ -16,4 +16,5 @@ Gem::Specification.new do |s|
   s.add_dependency             "couchrest",       "1.0.1"
   s.add_dependency             "mini_magick"
   s.add_dependency             "couchrest_model", "~> 1.0.0"
+  s.add_dependency             "activesupport", "~> 3.0.0"
 end

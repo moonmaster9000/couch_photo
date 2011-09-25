@@ -1,3 +1,15 @@
+v1.0.0.beta.1
+  -- complete rewrite of the code base. 
+    
+    New features (see README for details):
+      * variation metadata support
+      * width/height info about variations
+
+    Changed API (see README for details):
+      * XMP metadata API changed
+      * variation access API changed
+      * adding originals and custom variations API changed
+
 v0.0.7
   -- fixed a bug introduced in 0.0.6 where original images with blobs were being written to the current working directory upon XMP metadata extraction.
 
