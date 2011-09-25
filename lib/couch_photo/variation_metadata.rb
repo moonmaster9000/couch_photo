@@ -28,6 +28,10 @@ module CouchPhoto
       mini_magick[:width] 
     end
 
+    def metadata
+      @document.variation_metadata[@variation_name.to_s] ||= {}
+    end
+
     def height
       mini_magick[:height]
     end

@@ -1,6 +1,7 @@
 module CouchPhoto
   def self.included(base)
     base.property :original_filename
+    base.property :variation_metadata, Hash, :default => {}
     base.extend ClassMethods
     base.before_create :generate_variations
   end

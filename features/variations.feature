@@ -48,7 +48,6 @@ Feature: Variations
       """
 
 
-  @focus
   Scenario: Complex variation definitions
     Given an image class with a complex grayscale variation definition on it:
       """
@@ -193,4 +192,55 @@ Feature: Variations
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].width.should     == 128
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].height.should    == 128
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].data.should_not  be(nil)
+      """
+  
+  
+  @focus
+  Scenario: Adding metadata onto your image variations
+
+    Given an image class definition with a thumbnail variation definition:
+      """
+        class Image < CouchRest::Model::Base
+          include CouchPhoto
+
+          variations do
+            thumbnail "50x50"
+          end
+        end
+      """
+
+    When I create an instance of it and add an original image to it:
+      """
+        @image = Image.new
+        @image.load_original_from_file "features/fixtures/avatar.jpg"
+      """
+    
+    Then I should be able to add metadata to the thumbnail variation:
+      """
+        @image.variations[:thumbnail].metadata["alt"] = "Hi!"
+      """
+
+    And I should be able to access metadata on the thumbnail variation:
+      """
+        @image.variations[:thumbnail].metadata["alt"].should == "Hi!"
+      """
+
+    When I save:
+      """
+        @image.save
+      """
+
+    Then I should be able to access metadata on the thumbnail variation:
+      """
+        @image.variations[:thumbnail].metadata["alt"].should == "Hi!"
+      """
+
+    When I load the image from the database:
+      """
+        @image = Image.first
+      """
+
+    Then I should be able to access metadata on the thumbnail variation:
+      """
+        @image.variations[:thumbnail].metadata["alt"].should == "Hi!"
       """
