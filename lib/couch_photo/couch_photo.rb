@@ -44,9 +44,12 @@ module CouchPhoto
     variations[variation_name].create_attachment File.read(filepath)
   end
 
-  def load_custom_variation(variation_name, blob)
-    variations[variation_name] = CouchPhoto::CustomVariation.new self, variation_name
-    variations[variation_name].create_attachment blob
+  def load_custom_variation(options={})
+    raise "You must provide a :filename parameter" unless options[:filename]
+    raise "You must provide a :data parameter" unless options[:data]
+
+    variations[options[:filename]] = CouchPhoto::CustomVariation.new self, options[:filename]
+    variations[options[:filename]].create_attachment options[:data]
   end
 
   def original

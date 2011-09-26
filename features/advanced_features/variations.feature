@@ -313,7 +313,7 @@ Feature: Auto-generated and Custom Variations
 
     When I add a custom variation to it via the 'load_custom_variation' method:
       """
-        @image.load_custom_variation "crazy_variations/my_awesome_custom_variation.jpg", File.read("features/fixtures/monochrome.jpg")
+        @image.load_custom_variation :filename => "crazy_variations/my_awesome_custom_variation.jpg", :data => File.read("features/fixtures/monochrome.jpg")
       """
 
     And I save:
