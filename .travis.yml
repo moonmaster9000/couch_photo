@@ -5,4 +5,4 @@ rvm:
   - rbx-2.0
   - ree
 
-before_script: "echo 'before start' && sed -i '' -e 's/admin:password\@//' features/support/env.rb && echo 'before end'"
+before_script: "echo 'before start'"
