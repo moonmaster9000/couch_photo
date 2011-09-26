@@ -183,6 +183,7 @@ Feature: Auto-generated and Custom Variations
         @image.variations[:thumbnail].width.should     == 50
         @image.variations[:thumbnail].height.should    == 50
         @image.variations[:thumbnail].data.should_not be(nil)
+        @image.variations[:thumbnail].custom_variation?.should be(false)
       """
 
     When I load the image from the database:
@@ -199,6 +200,7 @@ Feature: Auto-generated and Custom Variations
         @image.variations[:thumbnail].width.should     == 50
         @image.variations[:thumbnail].height.should    == 50
         @image.variations[:thumbnail].data.should_not be(nil)
+        @image.variations[:thumbnail].custom_variation?.should be(false)
       """
 
 
@@ -232,6 +234,7 @@ Feature: Auto-generated and Custom Variations
         @image.variations[:grayscale].width.should     == 128
         @image.variations[:grayscale].height.should    == 128
         @image.variations[:grayscale].data.should_not  be(nil)
+        @image.variations[:grayscale].custom_variation?.should be(false)
       """
 
     When I load the image from the database:
@@ -248,6 +251,7 @@ Feature: Auto-generated and Custom Variations
         @image.variations[:grayscale].width.should     == 128
         @image.variations[:grayscale].height.should    == 128
         @image.variations[:grayscale].data.should_not  be(nil)
+        @image.variations[:grayscale].custom_variation?.should be(false)
       """
 
 
@@ -281,6 +285,7 @@ Feature: Auto-generated and Custom Variations
         @image.variations["monochrome.jpg"].width.should     == 128
         @image.variations["monochrome.jpg"].height.should    == 128
         @image.variations["monochrome.jpg"].data.should_not  be(nil)
+        @image.variations["monochrome.jpg"].custom_variation?.should be(true)
       """
 
     When I load the image from the database:
@@ -297,6 +302,7 @@ Feature: Auto-generated and Custom Variations
         @image.variations["monochrome.jpg"].width.should     == 128
         @image.variations["monochrome.jpg"].height.should    == 128
         @image.variations["monochrome.jpg"].data.should_not  be(nil)
+        @image.variations["monochrome.jpg"].custom_variation?.should be(true)
       """
 
 
@@ -330,6 +336,7 @@ Feature: Auto-generated and Custom Variations
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].width.should     == 128
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].height.should    == 128
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].data.should_not  be(nil)
+        @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].custom_variation?.should be(true)
       """
 
     When I load the image from the database:
@@ -346,6 +353,7 @@ Feature: Auto-generated and Custom Variations
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].width.should     == 128
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].height.should    == 128
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].data.should_not  be(nil)
+        @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].custom_variation?.should be(true)
       """
   
   

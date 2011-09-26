@@ -1,3 +1,6 @@
+v1.0.0.beta.4
+  -- new feature: "custom_variation?" method available on image variations to tell you whether or not that particular variation is a custom variation or not
+
 v1.0.0.beta.3
   -- load_custom_variation method now takes parameters as an options hash (consistent with "load_original")
 

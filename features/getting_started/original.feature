@@ -123,6 +123,7 @@ Feature: The "Original" Image
         @image.original.data.should      == File.read("features/fixtures/avatar.jpg")
         @image.original.width.should     == 128
         @image.original.height.should    == 128
+        @image.original.custom_variation?.should be(false)
       """
 
     When I load the image from the database:
@@ -140,4 +141,5 @@ Feature: The "Original" Image
         @image.original.data.should      == File.read("features/fixtures/avatar.jpg")
         @image.original.width.should     == 128
         @image.original.height.should    == 128
+        @image.original.custom_variation?.should be(false)
       """
