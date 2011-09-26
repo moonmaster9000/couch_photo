@@ -5,7 +5,5 @@ rvm:
   - rbx-2.0
   - ree
 
-script: "bundle exec cucumber features/"
-
 before_script:
   - "sed -i '' -e 's/admin:password\@//' features/support/env.rb"
