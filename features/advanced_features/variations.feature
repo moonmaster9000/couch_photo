@@ -177,7 +177,7 @@ Feature: Auto-generated and Custom Variations
     Then the image document should have a thumbnail variation:
       """
         @image.variations[:thumbnail].path.should      == "/couch_photo_test/#{@image.id}/variations/thumbnail.jpg"
-        @image.variations[:thumbnail].url.should       == "http://admin:password@localhost:5984/couch_photo_test/#{@image.id}/variations/thumbnail.jpg"
+        @image.variations[:thumbnail].url.should       == "#{Image.database.host}/couch_photo_test/#{@image.id}/variations/thumbnail.jpg"
         @image.variations[:thumbnail].extension.should == "jpg"
         @image.variations[:thumbnail].mime_type.should == "image/jpeg"
         @image.variations[:thumbnail].width.should     == 50
@@ -193,7 +193,7 @@ Feature: Auto-generated and Custom Variations
     Then the image document should have a thumbnail variation:
       """
         @image.variations[:thumbnail].path.should      == "/couch_photo_test/#{@image.id}/variations/thumbnail.jpg"
-        @image.variations[:thumbnail].url.should       == "http://admin:password@localhost:5984/couch_photo_test/#{@image.id}/variations/thumbnail.jpg"
+        @image.variations[:thumbnail].url.should       == "#{Image.database.host}/couch_photo_test/#{@image.id}/variations/thumbnail.jpg"
         @image.variations[:thumbnail].extension.should == "jpg"
         @image.variations[:thumbnail].mime_type.should == "image/jpeg"
         @image.variations[:thumbnail].width.should     == 50
@@ -226,7 +226,7 @@ Feature: Auto-generated and Custom Variations
     Then the image document should have a thumbnail variation:
       """
         @image.variations[:grayscale].path.should      == "/couch_photo_test/#{@image.id}/variations/grayscale.jpg"
-        @image.variations[:grayscale].url.should       == "http://admin:password@localhost:5984/couch_photo_test/#{@image.id}/variations/grayscale.jpg"
+        @image.variations[:grayscale].url.should       == "#{Image.database.host}/couch_photo_test/#{@image.id}/variations/grayscale.jpg"
         @image.variations[:grayscale].extension.should == "jpg"
         @image.variations[:grayscale].mime_type.should == "image/jpeg"
         @image.variations[:grayscale].width.should     == 128
@@ -242,7 +242,7 @@ Feature: Auto-generated and Custom Variations
     Then the image document should have a thumbnail variation:
       """
         @image.variations[:grayscale].path.should      == "/couch_photo_test/#{@image.id}/variations/grayscale.jpg"
-        @image.variations[:grayscale].url.should       == "http://admin:password@localhost:5984/couch_photo_test/#{@image.id}/variations/grayscale.jpg"
+        @image.variations[:grayscale].url.should       == "#{Image.database.host}/couch_photo_test/#{@image.id}/variations/grayscale.jpg"
         @image.variations[:grayscale].extension.should == "jpg"
         @image.variations[:grayscale].mime_type.should == "image/jpeg"
         @image.variations[:grayscale].width.should     == 128
@@ -275,7 +275,7 @@ Feature: Auto-generated and Custom Variations
     Then I should have a custom variation named 'monochrome':
       """
         @image.variations["monochrome.jpg"].path.should      == "/couch_photo_test/#{@image.id}/variations/monochrome.jpg"
-        @image.variations["monochrome.jpg"].url.should       == "http://admin:password@localhost:5984/couch_photo_test/#{@image.id}/variations/monochrome.jpg"
+        @image.variations["monochrome.jpg"].url.should       == "#{Image.database.host}/couch_photo_test/#{@image.id}/variations/monochrome.jpg"
         @image.variations["monochrome.jpg"].extension.should == "jpg"
         @image.variations["monochrome.jpg"].mime_type.should == "image/jpeg"
         @image.variations["monochrome.jpg"].width.should     == 128
@@ -291,7 +291,7 @@ Feature: Auto-generated and Custom Variations
     Then I should have a custom variation named 'monochrome':
       """
         @image.variations["monochrome.jpg"].path.should      == "/couch_photo_test/#{@image.id}/variations/monochrome.jpg"
-        @image.variations["monochrome.jpg"].url.should       == "http://admin:password@localhost:5984/couch_photo_test/#{@image.id}/variations/monochrome.jpg"
+        @image.variations["monochrome.jpg"].url.should       == "#{Image.database.host}/couch_photo_test/#{@image.id}/variations/monochrome.jpg"
         @image.variations["monochrome.jpg"].extension.should == "jpg"
         @image.variations["monochrome.jpg"].mime_type.should == "image/jpeg"
         @image.variations["monochrome.jpg"].width.should     == 128
@@ -324,7 +324,7 @@ Feature: Auto-generated and Custom Variations
     Then I should have a custom variation named 'crazy_variations/my_awesome_custom_variation.jpg':
       """
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].path.should      == "/couch_photo_test/#{@image.id}/variations/crazy_variations/my_awesome_custom_variation.jpg"
-        @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].url.should       == "http://admin:password@localhost:5984/couch_photo_test/#{@image.id}/variations/crazy_variations/my_awesome_custom_variation.jpg"
+        @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].url.should       == "#{Image.database.host}/couch_photo_test/#{@image.id}/variations/crazy_variations/my_awesome_custom_variation.jpg"
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].extension.should == "jpg"
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].mime_type.should == "image/jpeg"
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].width.should     == 128
@@ -340,7 +340,7 @@ Feature: Auto-generated and Custom Variations
     Then I should have a custom variation named 'crazy_variations/my_awesome_custom_variation.jpg':
       """
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].path.should      == "/couch_photo_test/#{@image.id}/variations/crazy_variations/my_awesome_custom_variation.jpg"
-        @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].url.should       == "http://admin:password@localhost:5984/couch_photo_test/#{@image.id}/variations/crazy_variations/my_awesome_custom_variation.jpg"
+        @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].url.should       == "#{Image.database.host}/couch_photo_test/#{@image.id}/variations/crazy_variations/my_awesome_custom_variation.jpg"
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].extension.should == "jpg"
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].mime_type.should == "image/jpeg"
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].width.should     == 128

@@ -117,7 +117,7 @@ Feature: The "Original" Image
       """
         @image.original.original_filename.should == "avatar.jpg"
         @image.original.path.should      == "/couch_photo_test/#{@image.id}/variations/original.jpg"
-        @image.original.url.should       == "http://admin:password@localhost:5984/couch_photo_test/#{@image.id}/variations/original.jpg"
+        @image.original.url.should       == "#{Image.database.host}/couch_photo_test/#{@image.id}/variations/original.jpg"
         @image.original.extension.should == "jpg"
         @image.original.mime_type.should == "image/jpeg"
         @image.original.data.should      == File.read("features/fixtures/avatar.jpg")
@@ -134,7 +134,7 @@ Feature: The "Original" Image
       """
         @image.original.original_filename.should == "avatar.jpg"
         @image.original.path.should      == "/couch_photo_test/#{@image.id}/variations/original.jpg"
-        @image.original.url.should       == "http://admin:password@localhost:5984/couch_photo_test/#{@image.id}/variations/original.jpg"
+        @image.original.url.should       == "#{Image.database.host}/couch_photo_test/#{@image.id}/variations/original.jpg"
         @image.original.extension.should == "jpg"
         @image.original.mime_type.should == "image/jpeg"
         @image.original.data.should      == File.read("features/fixtures/avatar.jpg")
