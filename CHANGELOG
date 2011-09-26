@@ -1,3 +1,6 @@
+v1.0.0.beta.6
+  -- you may now destroy custom variations
+
 v1.0.0.beta.5
   -- decode attachments after save (unfortunately necessary since couchrest _destructively_ modifies all attachments on save).
 

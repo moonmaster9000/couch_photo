@@ -406,3 +406,71 @@ Feature: Auto-generated and Custom Variations
       """
         @image.variations[:thumbnail].metadata["alt"].should == "Hi!"
       """
+
+  
+  @focus
+  Scenario: Creating a custom variation via "load_custom_variation_from_file" method
+
+    Given an instance of an image class that includes `CouchPhoto`:
+      """
+        class Image < CouchRest::Model::Base
+          include CouchPhoto
+
+          variations do
+            thumbnail "50x50"
+          end
+        end
+
+        @image = Image.new
+        @image.load_original_from_file "features/fixtures/avatar.jpg"
+      """
+
+    When I add a custom variation to it via the 'load_custom_variation_from_file' method:
+      """
+        @image.load_custom_variation_from_file "features/fixtures/monochrome.jpg"
+      """
+
+    And I save:
+      """
+        @image.save
+      """
+
+    Then I should have a custom variation named 'monochrome.jpg':
+      """
+        @image.variations["monochrome.jpg"].should_not be_nil
+      """
+    
+    When I destroy the 'monochrome.jpg' variation:
+      """
+        @image.variations["monochrome.jpg"].destroy
+      """
+
+    And I save:
+      """
+        @image.save
+      """
+
+    Then the image should not have a custom variation named 'monochrome.jpg':
+      """
+        @image.variations["monochrome.jpg"].should be_nil
+      """
+
+    When I load the image from the database:
+      """
+        @image = Image.first
+      """
+
+    Then the image should not have a custom variation named 'monochrome.jpg':
+      """
+        @image.variations["monochrome.jpg"].should be_nil
+      """
+
+    When I attempt to destroy a defined variation:
+      """
+        @attempt = proc { @image.variations[:thumbnail].destroy }
+      """
+
+    Then CouchPhoto should raise an exception:
+      """
+        @attempt.should raise_exception("You may only delete custom variations")
+      """

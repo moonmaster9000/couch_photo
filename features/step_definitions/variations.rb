@@ -37,3 +37,19 @@ end
 Then /^I should be able to access metadata on the thumbnail variation:$/ do |string|
   eval string
 end
+
+When /^I destroy the 'monochrome\.jpg' variation:$/ do |string|
+  eval string
+end
+
+Then /^the image should not have a custom variation named 'monochrome\.jpg':$/ do |string|
+  eval string
+end
+
+When /^I attempt to destroy a defined variation:$/ do |string|
+  eval string
+end
+
+Then /^CouchPhoto should raise an exception:$/ do |string|
+  eval string
+end

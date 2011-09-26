@@ -6,6 +6,15 @@ module CouchPhoto
       end
     end
 
+    def destroy
+      if custom_variation?
+        @document.delete_attachment attachment_name
+        @document.variations[@variation_name] = nil
+      else
+        raise "You may only delete custom variations"
+      end
+    end
+
     def extension
       if exists?
         @extension ||= File.extname(attachment_name).gsub(/\./, '')
