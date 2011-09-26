@@ -8,7 +8,7 @@ module CouchPhoto
 
   module ClassMethods
     def override_id!
-      self.before_create :set_id_to_original_filename
+      self.before_validate :set_id_to_original_filename
     end
 
     def extract_xmp_metadata!
@@ -102,7 +102,7 @@ module CouchPhoto
     if self.original_filename.blank?
       self.errors.add :original, "must be set before create"
     else
-      self.id = self.original_filename
+      self.id = self.original_filename if self.id.blank?
     end
   end
 
