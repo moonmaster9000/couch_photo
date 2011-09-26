@@ -4,6 +4,7 @@ module CouchPhoto
     base.property :variation_metadata, Hash, :default => {}
     base.extend ClassMethods
     base.before_create :generate_variations
+    base.after_create :decode_attachments
   end
 
   module ClassMethods
@@ -113,5 +114,12 @@ module CouchPhoto
     self.class.variations.variation_definitions.each do |variation_name, variation_definition|
       variation_definition.generate_variation self
     end
+  end
+
+  # why is this necessary? Because couchrest destructively base64 encodes all attachments in your document. 
+  def decode_attachments
+    self["_attachments"].each do |attachment_id, attachment_properties|
+      self["_attachments"][attachment_id]["data"] = Base64.decode64 attachment_properties["data"] if attachment_properties["data"] 
+    end if self["_attachments"]
   end
 end

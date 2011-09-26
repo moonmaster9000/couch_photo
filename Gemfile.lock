@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    couch_photo (1.0.0.beta.3)
+    couch_photo (1.0.0.beta.4)
       activesupport (~> 3.0.0)
       couchrest (= 1.0.1)
       couchrest_model (~> 1.0.0)
