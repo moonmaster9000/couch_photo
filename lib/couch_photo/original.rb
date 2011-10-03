@@ -21,12 +21,23 @@ module CouchPhoto
       end
     end
 
-    private
+    def variation_name
+      "original.#{extension}"
+    end
+
+    def variation_filename
+      "original.#{extension}"
+    end
+
     def attachment_name
-      @attachment_name ||= 
-        @document["_attachments"].keys.select do |attachment_name| 
-          attachment_name.match /variations\/original\.[^.]*/
-        end.first
+      if @attachment_name
+        @attachment_name
+      elsif @document["_attachments"]
+        @attachment_name ||= 
+          @document["_attachments"].keys.select do |attachment_name| 
+            attachment_name.match /variations\/original\.[^.]*/
+          end.first
+      end
     end
   end
 end

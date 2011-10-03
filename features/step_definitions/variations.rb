@@ -53,3 +53,11 @@ end
 Then /^CouchPhoto should raise an exception:$/ do |string|
   eval string
 end
+
+Then /^I should be able to add metadata to the original:$/ do |string|
+  eval string
+end
+
+Then /^I should be able to access metadata on the original:$/ do |string|
+  eval string
+end

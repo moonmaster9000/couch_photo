@@ -64,7 +64,7 @@ module CouchPhoto
   private
   def load_variations
     all_variations = {}
-
+    
     # setup defined variations
     defined_variation_names.each do |defined_variation_name|
       all_variations[defined_variation_name.to_sym] = CouchPhoto::Variation.new self, defined_variation_name
@@ -74,6 +74,9 @@ module CouchPhoto
     custom_variation_names.each do |custom_variation_name|
       all_variations[custom_variation_name] = CouchPhoto::CustomVariation.new self, custom_variation_name
     end
+
+    # setup original variation
+    all_variations[original.variation_filename] = original if original.exists?
 
     all_variations
   end

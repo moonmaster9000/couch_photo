@@ -356,8 +356,59 @@ Feature: Auto-generated and Custom Variations
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].custom_variation?.should be(true)
       """
   
-  
   @focus
+  Scenario: Adding metadata onto your image variations
+
+    Given an image class definition with a thumbnail variation definition:
+      """
+        class Image < CouchRest::Model::Base
+          include CouchPhoto
+
+          variations do
+            thumbnail "50x50"
+          end
+        end
+      """
+
+    When I create an instance of it and add an original image to it:
+      """
+        @image = Image.new
+        @image.load_original_from_file "features/fixtures/avatar.jpg"
+      """
+    
+    Then I should be able to add metadata to the original:
+      """
+        @image.original.metadata["alt"] = "Hi!"
+      """
+
+    And I should be able to access metadata on the original:
+      """
+        @image.variations["original.jpg"].metadata["alt"].should == "Hi!"
+        @image.original.metadata["alt"].should == "Hi!"
+      """
+
+    When I save:
+      """
+        @image.save
+      """
+
+    Then I should be able to access metadata on the original:
+      """
+        @image.variations["original.jpg"].metadata["alt"].should == "Hi!"
+        @image.original.metadata["alt"].should == "Hi!"
+      """
+
+    When I load the image from the database:
+      """
+        @image = Image.first
+      """
+
+    Then I should be able to access metadata on the original:
+      """
+        @image.variations["original.jpg"].metadata["alt"].should == "Hi!"
+        @image.original.metadata["alt"].should == "Hi!"
+      """
+
   Scenario: Adding metadata onto your image variations
 
     Given an image class definition with a thumbnail variation definition:

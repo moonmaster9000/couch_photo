@@ -1,3 +1,6 @@
+v1.0.0.beta.9
+  -- fixing bugs in accessing the original via `document.original` and `document.variations["original.jpg"]`
+
 v1.0.0.beta.8
   -- new variation metadata methods:
     - "variation_name": retrieve a variation's name via the "variation_name" method. e.g.: document.variations[:thumbnail].variation_name #==> "thumbnail"

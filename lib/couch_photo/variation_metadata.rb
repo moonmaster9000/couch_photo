@@ -82,17 +82,16 @@ module CouchPhoto
       "variations/#{variation_filename}"
     end
 
-    private
     def exists?
-      !@document["_attachments"][attachment_name].nil?
+      @document["_attachments"] && @document["_attachments"][attachment_name]
     end
 
+    private
     def mini_magick
       if exists?
         @mini_magick ||= MiniMagick::Image.read(self.data)
       end
     end
-
   end
 end
 
