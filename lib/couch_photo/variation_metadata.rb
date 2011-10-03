@@ -66,6 +66,10 @@ module CouchPhoto
       @document.class.variations.variation_definitions[@variation_name.to_sym] == nil
     end
 
+    def document
+      @document
+    end
+
     private
     def exists?
       !@document["_attachments"][attachment_name].nil?

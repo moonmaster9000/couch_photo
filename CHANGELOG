@@ -1,3 +1,6 @@
+v1.0.0.beta.7
+  -- make the original document available from a variation via document.variations[:my_variation].document
+
 v1.0.0.beta.6
   -- you may now destroy custom variations
 
