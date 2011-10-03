@@ -1,3 +1,9 @@
+v1.0.0.beta.8
+  -- new variation metadata methods:
+    - "variation_name": retrieve a variation's name via the "variation_name" method. e.g.: document.variations[:thumbnail].variation_name #==> "thumbnail"
+    - "variation_filename": retrieve a variation's filename via the "variation_filename" method. e.g.: document.variations[:thumbnail].variation_filename #==> "thumbnail.jpg"
+    - "attachment_name": retrieve a variation's attachment path via the "attachment_name" method. e.g.: documen.variations[:thumbnail].attachment_name #==> "variations/thumbnail.jpg"
+
 v1.0.0.beta.7
   -- make the original document available from a variation via document.variations[:my_variation].document
 

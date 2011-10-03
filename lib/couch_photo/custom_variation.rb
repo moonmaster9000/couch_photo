@@ -12,9 +12,12 @@ module CouchPhoto
       @document.create_attachment :name => attachment_name, :file => FakeFile.new(@data)
     end
 
-    private 
     def attachment_name
       "variations/#{@variation_name}"
+    end
+
+    def variation_filename
+      @variation_name
     end
   end
 end

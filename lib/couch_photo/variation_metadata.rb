@@ -70,6 +70,18 @@ module CouchPhoto
       @document
     end
 
+    def variation_name
+      @variation_name
+    end
+
+    def variation_filename
+      "#{@variation_name}.#{@document.original.extension}"
+    end
+
+    def attachment_name
+      "variations/#{variation_filename}"
+    end
+
     private
     def exists?
       !@document["_attachments"][attachment_name].nil?
@@ -81,9 +93,6 @@ module CouchPhoto
       end
     end
 
-    def attachment_name
-      "variations/#{@variation_name}.#{@document.original.extension}"
-    end
   end
 end
 
