@@ -356,7 +356,6 @@ Feature: Auto-generated and Custom Variations
         @image.variations["crazy_variations/my_awesome_custom_variation.jpg"].custom_variation?.should be(true)
       """
   
-  @focus
   Scenario: Adding metadata onto your image variations
 
     Given an image class definition with a thumbnail variation definition:
@@ -459,7 +458,6 @@ Feature: Auto-generated and Custom Variations
       """
 
   
-  @focus
   Scenario: Creating a custom variation via "load_custom_variation_from_file" method
 
     Given an instance of an image class that includes `CouchPhoto`:
