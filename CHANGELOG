@@ -1,3 +1,6 @@
+v1.0.0.beta.10
+  -- new feature: url transformations. Read about it here: https://www.relishapp.com/moonmaster9000/couch-photo/docs/advanced-features/url-transformation
+
 v1.0.0.beta.9
   -- fixing bugs in accessing the original via `document.original` and `document.variations["original.jpg"]`
 
