@@ -6,3 +6,4 @@
 - advanced_features:
   - variations.feature
   - xmp_metadata.feature
+  - url_transformation.feature
