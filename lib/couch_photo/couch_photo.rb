@@ -26,6 +26,22 @@ module CouchPhoto
     def extract_xmp_metadata?
       @extract_xmp_metadata
     end
+
+    def url_transformer(transformer_object=nil, &block)
+      if transformer_object
+        @url_transformer = proc {|url| transformer_object.transform url}
+      else
+        @url_transformer = block
+      end
+    end
+
+    def transform(url)
+      if @url_transformer
+        @url_transformer.call url
+      else
+        url
+      end
+    end
   end
 
   def load_original_from_file(filepath)

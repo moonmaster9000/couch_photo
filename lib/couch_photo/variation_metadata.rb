@@ -56,7 +56,7 @@ module CouchPhoto
 
     def url
       if exists?
-        "#{@document.database.root}/#{@document.id}/#{attachment_name}"
+        @document.class.transform "#{@document.database.root}/#{@document.id}/#{attachment_name}"
       end
     end
 
