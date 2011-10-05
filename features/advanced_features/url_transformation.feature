@@ -77,8 +77,8 @@ Feature: URL Transformation
 
     Then my image urls should have 'https' instead of 'http':
       """ 
-        @image.original.url.should == "https://admin:password@localhost:5984/couch_photo_test/avatar.jpg/variations/original.jpg"
-        @image.variations[:thumbnail].url.should == "https://admin:password@localhost:5984/couch_photo_test/avatar.jpg/variations/thumbnail.jpg"
+        @image.original.url.should == "#{Image.database.root.gsub("http", "https")}/avatar.jpg/variations/original.jpg"
+        @image.variations[:thumbnail].url.should == "#{Image.database.root.gsub("http", "https")}/avatar.jpg/variations/thumbnail.jpg"
       """
 
     When I load the image from the database:
@@ -88,21 +88,19 @@ Feature: URL Transformation
 
     Then my image urls should have 'https' instead of 'http':
       """ 
-        @image.original.url.should == "https://admin:password@localhost:5984/couch_photo_test/avatar.jpg/variations/original.jpg"
-        @image.variations[:thumbnail].url.should == "https://admin:password@localhost:5984/couch_photo_test/avatar.jpg/variations/thumbnail.jpg"
+        @image.original.url.should == "#{Image.database.root.gsub("http", "https")}/avatar.jpg/variations/original.jpg"
+        @image.variations[:thumbnail].url.should == "#{Image.database.root.gsub("http", "https")}/avatar.jpg/variations/thumbnail.jpg"
       """
 
 
   Scenario: Defining url transformations with an object
-    Given the following URL transformer that strips out basic auth:
+    Given the following URL transformer that secures urls:
       """
-        module StripBasicAuth
+        module SecureUrl
           extend self
 
           def transform(url)
-            url.gsub %r{^http://([^:]+:[^@]+)@(.*)$} do
-              "http://#{$2}"
-            end
+            url.gsub "http", "https"
           end
         end
       """
@@ -114,7 +112,7 @@ Feature: URL Transformation
 
           override_id!
 
-          url_transformer StripBasicAuth
+          url_transformer SecureUrl
 
           variations do
             thumbnail "50x50"
@@ -129,10 +127,10 @@ Feature: URL Transformation
         @image.save
       """
 
-    Then my image urls should not have any basic auth:
+    Then my image urls should have 'https' instead of 'http':
       """ 
-        @image.original.url.should == "http://localhost:5984/couch_photo_test/avatar.jpg/variations/original.jpg"
-        @image.variations[:thumbnail].url.should == "http://localhost:5984/couch_photo_test/avatar.jpg/variations/thumbnail.jpg"
+        @image.original.url.should == "#{Image.database.root.gsub("http", "https")}/avatar.jpg/variations/original.jpg"
+        @image.variations[:thumbnail].url.should == "#{Image.database.root.gsub("http", "https")}/avatar.jpg/variations/thumbnail.jpg"
       """
 
     When I load the image from the database:
@@ -140,8 +138,8 @@ Feature: URL Transformation
         @image = Image.first
       """
 
-    Then my image urls should not have any basic auth:
+    Then my image urls should have 'https' instead of 'http':
       """ 
-        @image.original.url.should == "http://localhost:5984/couch_photo_test/avatar.jpg/variations/original.jpg"
-        @image.variations[:thumbnail].url.should == "http://localhost:5984/couch_photo_test/avatar.jpg/variations/thumbnail.jpg"
+        @image.original.url.should == "#{Image.database.root.gsub("http", "https")}/avatar.jpg/variations/original.jpg"
+        @image.variations[:thumbnail].url.should == "#{Image.database.root.gsub("http", "https")}/avatar.jpg/variations/thumbnail.jpg"
       """

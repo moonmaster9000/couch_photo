@@ -10,15 +10,10 @@ Then /^my image urls should have 'https' instead of 'http':$/ do |string|
   eval string
 end
 
-Given /^the following URL transformer that strips out basic auth:$/ do |string|
+Given /^the following URL transformer that secures urls:$/ do |string|
   eval string
 end
 
 Given /^the following Image model in which I supply StripBasicAuth as the url transformer:$/ do |string|
   eval string
 end
-
-Then /^my image urls should not have any basic auth:$/ do |string|
-  eval string
-end
-
