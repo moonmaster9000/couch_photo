@@ -1,3 +1,6 @@
+v1.0.0.beta.11
+  -- bug fix: you can now update the original image by simply calling "load_original" or "load_original_from_file" again
+
 v1.0.0.beta.10
   -- new feature: url transformations. Read about it here: https://www.relishapp.com/moonmaster9000/couch-photo/docs/advanced-features/url-transformation
 
