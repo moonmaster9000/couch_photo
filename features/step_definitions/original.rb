@@ -33,3 +33,11 @@ end
 Then /^the original image should be a part of the document:$/ do |string|
   eval string
 end
+
+When /^I update the original with a new image:$/ do |string|
+  eval string
+end
+
+Then /^the original image should be the new image:$/ do |string|
+  eval string
+end

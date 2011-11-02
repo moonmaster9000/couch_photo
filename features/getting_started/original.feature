@@ -143,3 +143,37 @@ Feature: The "Original" Image
         @image.original.height.should    == 128
         @image.original.custom_variation?.should be(false)
       """
+
+  Scenario: updating the original
+    
+    Given an image with an original:
+      """
+        class Image < CouchRest::Model::Base
+          include CouchPhoto
+        end
+
+        @image = Image.new
+        @image.load_original_from_file "features/fixtures/avatar.jpg"
+        @image.save
+      """
+
+    When I update the original with a new image:
+      """
+        @image.load_original :filename => "avatar.jpg", :data => File.read("features/fixtures/xmp.jpg")
+        @image.save
+      """
+
+    Then the original image should be the new image:
+      """
+        @image.original.data.should == File.read("features/fixtures/xmp.jpg")
+      """
+
+    When I load the image from the database:
+      """
+        @image = Image.first
+      """
+
+    Then the original image should be the new image:
+      """
+        @image.original.data.should == File.read("features/fixtures/xmp.jpg")
+      """
