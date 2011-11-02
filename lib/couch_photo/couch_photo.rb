@@ -76,6 +76,15 @@ module CouchPhoto
   def variations
     @variations ||= load_variations
   end
+  
+  def regenerate_variations
+    generate_variations
+    @variations = load_variations
+  end
+
+  def reload_variations
+    @variations = load_variations
+  end
 
   private
   def load_variations

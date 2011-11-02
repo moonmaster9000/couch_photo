@@ -41,3 +41,7 @@ end
 Then /^the original image should be the new image:$/ do |string|
   eval string
 end
+
+Then /^the auto\-generated variations should be updated:$/ do |string|
+  eval string
+end

@@ -150,11 +150,15 @@ Feature: The "Original" Image
       """
         class Image < CouchRest::Model::Base
           include CouchPhoto
+          variations do
+            small "30x30"
+          end
         end
 
         @image = Image.new
         @image.load_original_from_file "features/fixtures/avatar.jpg"
         @image.save
+        @small_variation_data = @image.variations[:small].data
       """
 
     When I update the original with a new image:
@@ -166,6 +170,11 @@ Feature: The "Original" Image
     Then the original image should be the new image:
       """
         @image.original.data.should == File.read("features/fixtures/xmp.jpg")
+      """
+
+    And the auto-generated variations should be updated:
+      """
+        @image.variations[:small].data.should_not != @small_variation_data
       """
 
     When I load the image from the database:

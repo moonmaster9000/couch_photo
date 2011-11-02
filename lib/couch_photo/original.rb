@@ -13,6 +13,8 @@ module CouchPhoto
 
       if @document.has_attachment?(@attachment_name)
         @document.update_attachment :name => @attachment_name, :file => FakeFile.new(@data)
+        @document.regenerate_variations
+        @document.reload_variations
       else
         @document.create_attachment :name => @attachment_name, :file => FakeFile.new(@data)
       end
