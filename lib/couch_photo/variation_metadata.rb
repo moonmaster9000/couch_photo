@@ -1,3 +1,5 @@
+require 'ftools'
+
 module CouchPhoto
   module VariationMetadata
     def path
@@ -47,11 +49,15 @@ module CouchPhoto
 
     def xmp_metadata
       tmp_image_uuid = `uuidgen`.strip
-      tmp_image_file_name = "/tmp/#{tmp_image_uuid}.#{extension}" 
+      tmp_image_file_name = "/tmp/#{tmp_image_uuid}.#{extension}"
       tmp_xmp_file_name = "/tmp/#{tmp_image_uuid}.xmp" 
       mini_magick.write tmp_image_file_name 
-      `convert #{tmp_image_file_name} #{tmp_xmp_file_name} 2> /dev/null` 
-      Hash.from_xml File.read(tmp_xmp_file_name)
+      `convert #{tmp_image_file_name} #{tmp_xmp_file_name} 2> /dev/null`
+      meta_data = Hash.from_xml File.read(tmp_xmp_file_name)
+
+      File.safe_unlink(tmp_image_file_name)
+      File.safe_unlink(tmp_xmp_file_name)
+      meta_data
     end
 
     def url
