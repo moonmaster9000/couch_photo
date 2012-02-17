@@ -53,10 +53,10 @@ module CouchPhoto
       tmp_xmp_file_name = "/tmp/#{tmp_image_uuid}.xmp" 
       mini_magick.write tmp_image_file_name 
       `convert #{tmp_image_file_name} #{tmp_xmp_file_name} 2> /dev/null`
-      meta_data = Hash.from_xml File.read(tmp_xmp_file_name)
+      meta_data = Hash.from_xml File.read(tmp_xmp_file_name) rescue {}
 
-      File.safe_unlink(tmp_image_file_name)
-      File.safe_unlink(tmp_xmp_file_name)
+      File.safe_unlink(tmp_image_file_name) rescue nil
+      File.safe_unlink(tmp_xmp_file_name) rescue nil
       meta_data
     end
 
